@@ -1,5 +1,6 @@
-from flight_data_processing import load_and_process_data
 import pandas as pd
+
+
 
 def analyze_delays(connection):
 
@@ -56,3 +57,15 @@ def most_occured_delay_time(connection):
     mode_data = pd.read_sql_query(mode_query, connection)
 
     return mode_data
+
+def airline_delay_percentage(filepath):
+    #reads excel data
+    data_frame = pd.read_excel(filepath, header = 1)
+    # delayed flights ie greater than 0 minutes of delay
+    delayed_flights = data_frame[data_frame['late_aircraft_delay'] > 0]
+    delay_counts = delayed_flights.groupby('airport').size().reset_index(name='Delays')
+    total_delays = delay_counts['Delays'].sum()
+
+    delay_counts['Percentage'] = (delay_counts['Delays'] / total_delays) * 100
+
+    return delay_counts
