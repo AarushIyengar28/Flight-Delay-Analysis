@@ -1,6 +1,6 @@
 from flight_data_processing import load_and_process_data
-from flight_data_analysis import analyze_delays, max_delay, min_delay, sum_of_delays, most_occured_delay_time
-from flight_data_visualization import plot_histogram
+from flight_data_analysis import analyze_delays, max_delay, min_delay, sum_of_delays, most_occured_delay_time, airline_delay_percentage
+from flight_data_visualization import plot_histogram, plot_pie_chart
 
 
 filepath = "/Users/aarushiyengar/Desktop/Programming/Python/Flight_Delay_Analysis/Airline_Delay_Cause.xlsx"
@@ -44,5 +44,19 @@ print(f"The sum of all delays in minutes is {sum_data}")
 mode_data = most_occured_delay_time(connection)
 
 print(f"The most occured delay time is {mode_data} minutes")
+
+#Graphs a pie chart showing the airlines percentage of delays from total delays
+
+delay_counts = airline_delay_percentage(filepath)
+
+print(delay_counts)# for testing to see if the columns were made correctly
+
+#plot_pie_chart(top_ten_airlines)
+top_ten_airlines = delay_counts.head(10)
+plot_pie_chart(top_ten_airlines)
+
+#plot_pie_chart(top_ten_airlines)
+
+
 
 connection.close()
